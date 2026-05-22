@@ -1,5 +1,6 @@
 package com.example.application.views.home;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -21,6 +22,11 @@ public class HomeView extends VerticalLayout {
         setSpacing(false);
         VerticalLayout header = getHeader();
 
+        Image img = new Image("images/grafik.png", "Dentist Logo");
+        img.setWidth("220px");
+
+
+
         Paragraph description = new Paragraph(
                 "In unserer Zahnarztpraxis trifft moderne Zahnmedizin auf eine entspannte, freundliche Atmosphäre." +
                         " Wir nehmen uns Zeit für dich und sorgen dafür, dass jeder Besuch so angenehm wie möglich ist –" +
@@ -39,7 +45,7 @@ public class HomeView extends VerticalLayout {
         H3 street = new H3("Spengergasse 20");
         H3 city = new H3("1050 Wien");
 
-        add(header, description, name, street, city);
+        add(header, img, description, name, street, city);
     }
 
     public VerticalLayout getHeader() {
@@ -55,6 +61,7 @@ public class HomeView extends VerticalLayout {
         subName.getStyle()
                 .set("margin", "0")
                 .set("color", "gray");
+
 
         header.add(companyName, subName);
 

@@ -31,7 +31,6 @@ public class PricingView extends VerticalLayout {
         produkt1.add(produktName1, Preis1, Grundgebur);
         produkte.add(produkt1);
 
-
         Paragraph info = new Paragraph("Alle Preise inkl Steuer.");
 
         setSizeFull();
