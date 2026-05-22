@@ -3,6 +3,7 @@ package com.example.application.views.pricing;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
@@ -18,19 +19,26 @@ public class PricingView extends VerticalLayout {
     public PricingView() {
         setSpacing(false);
 
-        Image img = new Image("images/empty-plant.png", "placeholder plant");
-        img.setWidth("200px");
-        add(img);
-
-        H2 header = new H2("This place intentionally left empty");
-        header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
+        H2 header = new H2("Pricing Tabelle");
         add(header);
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+
+        HorizontalLayout produkte = new HorizontalLayout();
+
+        VerticalLayout produkt1 = new VerticalLayout();
+        H2 produktName1 = new H2("Produkt 1");
+        Paragraph Preis1 = new Paragraph("Preis: 200,50€ ");
+        Paragraph Grundgebur = new Paragraph("Zusätzlich kommt eine Gebür von 100,-€ dazu");
+        produkt1.add(produktName1, Preis1, Grundgebur);
+        produkte.add(produkt1);
+
+
+        Paragraph info = new Paragraph("Alle Preise inkl Steuer.");
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         getStyle().set("text-align", "center");
+        add(produkte, info);
     }
 
 }
