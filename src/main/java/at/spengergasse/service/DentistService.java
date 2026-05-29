@@ -17,6 +17,12 @@ public class DentistService {
         dentists.add(new Dentist());
     }
 
+    public ArrayList<Dentist> findAll(){
+        ArrayList<Dentist> clone;
+        clone = new ArrayList<>(dentists);
+        return clone;
+    }
+
     @Override
     public String toString() {
         return dentists.stream()

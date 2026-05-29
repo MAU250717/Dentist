@@ -35,7 +35,7 @@ public class Dentist {
         setAppointmentDate(LocalDate.now());
         setTreatment("Kontrolle");
         setPatientName("Max Mustermann");
-        setPrice(0.0);
+        setPrice(150.0);
         setQuantity(1);
         setAnestesie(false);
     }

@@ -1,5 +1,7 @@
 package at.spengergasse.views.appointment;
-
+import at.spengergasse.domain.Dentist;
+import at.spengergasse.service.DentistService;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
@@ -7,7 +9,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Appointment")
@@ -15,22 +19,20 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Menu(order = 1, icon = LineAwesomeIconUrl.CALENDAR_ALT_SOLID)
 public class AppointmentView extends VerticalLayout {
 
-    public AppointmentView() {
-        setSpacing(false);
+        private final Grid<Dentist> grid = new Grid<>(Dentist.class, true);
+        private final DentistService dentistService;
 
-        Image img = new Image("images/empty-plant.png", "placeholder plant");
-        img.setWidth("200px");
-        add(img);
+        public AppointmentView(@Autowired DentistService dentistService) {
+            this.dentistService = dentistService;
+            setSpacing(true);
 
-        H2 header = new H2("This place intentionally left empty");
-        header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
-        add(header);
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+            setSizeFull();
+            grid.setSizeFull();
+            add(grid);
+            reload();
+        }
 
-        setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        getStyle().set("text-align", "center");
-    }
-
+        private void reload() {
+            grid.setItems(dentistService.findAll());
+        }
 }
