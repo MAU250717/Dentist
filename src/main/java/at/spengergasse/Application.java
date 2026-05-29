@@ -1,4 +1,4 @@
-package com.example.application;
+package at.spengergasse;
 
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;

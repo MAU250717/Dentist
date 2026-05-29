@@ -1,4 +1,4 @@
-package com.example.application.views.appointment;
+package at.spengergasse.views.appointment;
 
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;

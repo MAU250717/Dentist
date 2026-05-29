@@ -1,4 +1,4 @@
-package com.example.application.views.home;
+package at.spengergasse.views.home;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -22,7 +22,7 @@ public class HomeView extends VerticalLayout {
         setSpacing(false);
         VerticalLayout header = getHeader();
 
-        Image img = new Image("images/grafik.png", "Dentist Logo");
+        Image img = new Image("src/main/resources/META-INF.resources/images/img.png", "Dentist Logo");
         img.setWidth("220px");
 
 
