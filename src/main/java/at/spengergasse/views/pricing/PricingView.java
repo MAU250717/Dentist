@@ -61,5 +61,4 @@ public class PricingView extends VerticalLayout {
         info.getStyle().set("text-align", "center");
         add(info);
     }
-
 }
