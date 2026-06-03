@@ -1,8 +1,10 @@
 package at.spengergasse.views.pricing;
 
+import at.spengergasse.views.home.HomeView;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
@@ -42,25 +44,22 @@ public class PricingView extends VerticalLayout {
     public PricingView() {
         setSpacing(false);
 
-        H2 header = new H2("Pricing Tabelle");
-        add(header);
+        add(HomeView.getHeader());
 
-        HorizontalLayout produkte = new HorizontalLayout();
+        VerticalLayout zone1 = createCard("5. Bezirk", 3.9, OptionalDouble.of(15.0));
+        VerticalLayout zone2 = createCard("3. und 4. Bezirk", 5.9, OptionalDouble.of(20));
+        VerticalLayout zone3 = createCard("Wien", 7.9, OptionalDouble.of(30));
+        VerticalLayout zone4 = createCard("Außerhalb von Wien", 20, OptionalDouble.empty());
+        FlexLayout cardsLayout = new FlexLayout(zone1, zone2, zone3, zone4);
+        cardsLayout.setWidthFull();
+        cardsLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        cardsLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        add(cardsLayout);
 
-        VerticalLayout produkt1 = new VerticalLayout();
-        H2 produktName1 = new H2("Produkt 1");
-        Paragraph Preis1 = new Paragraph("Preis: 200,50€ ");
-        Paragraph Grundgebur = new Paragraph("Zusätzlich kommt eine Gebür von 100,-€ dazu");
-        produkt1.add(produktName1, Preis1, Grundgebur);
-        produkte.add(produkt1);
-
-        Paragraph info = new Paragraph("Alle Preise inkl Steuer.");
-
-        setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        getStyle().set("text-align", "center");
-        add(produkte, info);
+        Paragraph info = new Paragraph("Wir liefern Ihre Bestellung in der Regel innerhalb von 30 bis 90 Minuten – frisch und heiß zu Ihnen nach Hause.");
+        info.setWidth("100%");
+        info.getStyle().set("text-align", "center");
+        add(info);
     }
 
 }

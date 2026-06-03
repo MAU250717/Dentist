@@ -21,14 +21,14 @@ public class HomeView extends VerticalLayout {
 
     public HomeView() {
         setSpacing(false);
-        setAlignItems(Alignment.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        VerticalLayout header = getHeader();
+        add(getHeader());
 
         HorizontalLayout logoText = new HorizontalLayout();
         Image logo = new Image("images/img.png", "Dentist Logo");
-        logo.setWidth("800px");
+        logo.setWidth("120px");
+        logo.setHeight("120px");
         Paragraph line1 = new Paragraph("In unserer Zahnarztpraxis trifft moderne Zahnmedizin auf eine entspannte, freundliche Atmosphäre. Wir nehmen uns Zeit für dich und sorgen dafür");
         line1.setWidth("500px");
         line1.getStyle()
@@ -56,27 +56,28 @@ public class HomeView extends VerticalLayout {
         H3 city = new H3("1050 Wien");
         address.add(name, street, city);
 
-        add(header, logoText, line2, line3, address);
+        add(logoText, line2, line3, address);
     }
 
-    public VerticalLayout getHeader() {
-        VerticalLayout header = new VerticalLayout();
-
-        H1 companyName = new H1("Dentist");
+    public static Component getHeader() {
+                H1 companyName = new H1("Dentist");
         companyName.getStyle()
-                .set("font-family", "bold")
+                .set("font-family", "cursive")
                 .set("font-size", "6rem")
                 .set("margin", "0");
 
-        H2 subName = new H2("... the best Dentist ...");
+        H2 subName = new H2("... the mega pizza place ...");
         subName.getStyle()
                 .set("margin", "0")
                 .set("color", "gray");
 
+        VerticalLayout headerLayout = new VerticalLayout(companyName, subName);
+        headerLayout.setSpacing(false);
+        headerLayout.setPadding(false);
+        headerLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        header.add(companyName, subName);
 
-        return header;
+        return headerLayout;
     }
 
 }
