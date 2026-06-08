@@ -66,7 +66,7 @@ public class HomeView extends VerticalLayout {
                 .set("font-size", "6rem")
                 .set("margin", "0");
 
-        H2 subName = new H2("... the mega pizza place ...");
+        H2 subName = new H2("... the best Dentist in Vienna  ...");
         subName.getStyle()
                 .set("margin", "0")
                 .set("color", "gray");
