@@ -64,6 +64,17 @@ public class Dentist {
         this.patientId = sequence.getAndIncrement();
     }
 
+    public void setPrice(Double price) {
+        if (price > 0 && price <= 2500) {
+            this.price = price;
+        }
+        else  {
+            throw new DentistExeption("Price must be between 0 and 1500");
+        }
+    }
+
+
+
     @Override
     public Dentist clone() {
         return new Dentist(patientId, appointmentDate, treatment, patientName, price, quantity, anestesie);

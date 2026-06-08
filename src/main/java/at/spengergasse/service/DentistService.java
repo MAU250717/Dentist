@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 @Service
@@ -12,10 +13,11 @@ public class DentistService {
 
     public DentistService() {
         dentists = new ArrayList<>(1000);
+        fillTestData();
     }
 
     public void fillTestData(){
-        dentists.add(new Dentist(LocalDate.of(2026,04,29), "Kontrolle", "Liam Moser", 50.0, 1, false));
+        dentists.add(new Dentist(LocalDate.of(2026,4,29), "Kontrolle", "Liam Moser", 50.0, 1, false));
         dentists.add(new Dentist(LocalDate.of(2024, 3, 12), "Zahnreinigung", "Anna Müller", 80.0, 1, false));
         dentists.add(new Dentist(LocalDate.of(2024, 4, 5), "Wurzelbehandlung", "Markus Steiner", 350.0, 1, true));
         dentists.add(new Dentist(LocalDate.of(2024, 5, 20), "Füllung", "Julia Berger", 120.0, 2, false));
@@ -59,6 +61,19 @@ public class DentistService {
     }
 
     public void removeAllAnestesie() {
+        Iterator<Dentist> it;
+        Dentist d;
 
+        it = dentists.iterator();
+        while (it.hasNext()) {
+            d = it.next();
+            if (d.getAnestesie() == true) {
+                it.remove();
+            }
+        }
+    }
+
+    public void addWrong() {
+        dentists.add(new Dentist(LocalDate.of(2026,4,29), "Kontrolle", "Liam Moser", -5.0, 1, false));
     }
 }
