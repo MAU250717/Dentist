@@ -22,7 +22,7 @@ public class PricingView extends VerticalLayout {
 
     private VerticalLayout createCard(String zone, double price, OptionalDouble freeAnestesie) {
         H2 zoneTitle = new H2(zone);
-        Paragraph priceText = new Paragraph("Lieferkosten: " + price + " Euro");
+        Paragraph priceText = new Paragraph("Mindestkosten: " + price + " Euro");
 
         String text;
         text = freeAnestesie.isPresent() ? "Gratisanestesie ab: " + freeAnestesie.getAsDouble() + " Euro" : "Keine Gratisanestesie";
@@ -46,10 +46,10 @@ public class PricingView extends VerticalLayout {
 
         add(HomeView.getHeader());
 
-        VerticalLayout zone1 = createCard("5. Bezirk", 3.9, OptionalDouble.of(15.0));
-        VerticalLayout zone2 = createCard("3. und 4. Bezirk", 5.9, OptionalDouble.of(20));
-        VerticalLayout zone3 = createCard("Wien", 7.9, OptionalDouble.of(30));
-        VerticalLayout zone4 = createCard("Außerhalb von Wien", 20, OptionalDouble.empty());
+        VerticalLayout zone1 = createCard("5. Bezirk", 30.9, OptionalDouble.of(150.0));
+        VerticalLayout zone2 = createCard("3. und 4. Bezirk", 22.9, OptionalDouble.of(200));
+        VerticalLayout zone3 = createCard("Wien", 27.9, OptionalDouble.of(300));
+        VerticalLayout zone4 = createCard("Außerhalb von Wien", 25, OptionalDouble.empty());
         FlexLayout cardsLayout = new FlexLayout(zone1, zone2, zone3, zone4);
         cardsLayout.setWidthFull();
         cardsLayout.setJustifyContentMode(JustifyContentMode.CENTER);
