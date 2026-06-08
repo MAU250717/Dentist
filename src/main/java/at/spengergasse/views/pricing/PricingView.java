@@ -56,7 +56,7 @@ public class PricingView extends VerticalLayout {
         cardsLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         add(cardsLayout);
 
-        Paragraph info = new Paragraph("Wir liefern Ihre Bestellung in der Regel innerhalb von 30 bis 90 Minuten – frisch und heiß zu Ihnen nach Hause.");
+        Paragraph info = new Paragraph("Wir liefern nur die besten Ergebnisse für unsere Patienten - und das 24/7.");
         info.setWidth("100%");
         info.getStyle().set("text-align", "center");
         add(info);

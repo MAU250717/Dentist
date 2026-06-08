@@ -1,10 +1,7 @@
 package at.spengergasse.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,14 +22,18 @@ public class Dentist {
     @Id
     private Long appointmentId;
     @NotNull(message = "The Appointment Date is required")
-    @PastOrPresent(message = "Appointment Date must be in the Future")
+    @Future(message = "Appointment date must be in the future")
     private LocalDate appointmentDate;
+    @NotNull(message = "A Treatment specification is required")
     private String    treatment;
+    @NotNull(message = "A Name is required")
     private String    patientName;
     @NotNull(message = "A Price is required")
     @DecimalMin(value = "30.0", message = "The min. price is 30.0 Eur")
     @DecimalMax(value = "2500.0", message = "The max. price is 2500.0 Eur")
     private Double    price;
+    @NotNull(message = "A Quantity specification is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
     private Integer   quantity;
     private Boolean   anestesie;
 
