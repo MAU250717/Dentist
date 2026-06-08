@@ -1,5 +1,6 @@
 package at.spengergasse.service;
 import at.spengergasse.domain.Dentist;
+import at.spengergasse.domain.DentistExeption;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -75,5 +76,20 @@ public class DentistService {
 
     public void addWrong() {
         dentists.add(new Dentist(LocalDate.of(2026,4,29), "Kontrolle", "Liam Moser", -5.0, 1, false));
+    }
+
+    public void removeOneApp(Long patientId) {
+        Dentist d = null;
+
+        for (Dentist dentist : dentists) {
+            if (dentist.getAppointmentId().equals(patientId)) {
+                d = dentist;
+            }
+        }
+        dentists.remove(d);
+
+        if (!dentists.removeIf(dentist -> dentist.getAppointmentId().equals(patientId))) {
+            throw new DentistExeption("AppointmentId: " + patientId + " not found");
+        }
     }
 }

@@ -4,9 +4,7 @@ import at.spengergasse.domain.DentistExeption;
 import at.spengergasse.service.DentistService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -14,14 +12,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.lumo.LumoUtility;
-import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import com.vaadin.flow.component.checkbox.Checkbox;
-
-import java.awt.*;
-import java.time.LocalDate;
 
 @PageTitle("Appointment")
 @Route("Appointment")
@@ -48,7 +41,7 @@ public class AppointmentView extends VerticalLayout {
 
         add(new HorizontalLayout(buttonRemoveAll,buttonAdd10Appointments,buttonRemoveAllAnestesie,buttonAddWrong));
 
-        grid.addColumn(dentist -> dentist.getPatientId())
+        grid.addColumn(dentist -> dentist.getAppointmentId())
                 .setHeader("Patient ID")
                 .setSortable(true);
         grid.addColumn(dentist -> dentist.getAppointmentDate())
@@ -71,7 +64,6 @@ public class AppointmentView extends VerticalLayout {
                 .setHeader("Anestesie")
                 .setSortable(true);
         */
-
         Image p = new Image("icons/anesthesie.png", "Anesthesie");
         p.setWidth("25px");
         grid.addColumn(o -> o.getAnestesie())
@@ -86,8 +78,27 @@ public class AppointmentView extends VerticalLayout {
                 .setHeader("Anestesie")
                 .setSortable(true);
 
+        grid.addComponentColumn(dentist -> {
+            Button delete = new Button("Delete");
+            delete.addClickListener(e -> removeOneApp(dentist.getAppointmentId()));
+            return delete;
+        })
+                        .setHeader("Action")
+                        .setSortable(false);
+
         add(grid);
         reload();
+    }
+
+    private void removeOneApp(Long patientId) {
+        try {
+            dentistService.removeOneApp(patientId);
+            reload();
+        }
+        catch(DentistExeption e){
+            Notification.show(e.getMessage());
+            reload();
+        }
     }
 
     private void addWrong() {

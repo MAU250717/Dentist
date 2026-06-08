@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Dentist {
 
     @Id
-    private Long      patientId;
+    private Long appointmentId;
     private LocalDate appointmentDate;
     private String    treatment;
     private String    patientName;
@@ -31,7 +31,7 @@ public class Dentist {
     private static final AtomicLong sequence = new AtomicLong(1000);
 
     public Dentist() {
-        setPatientId();
+        setAppointmentId();
         setAppointmentDate(LocalDate.now());
         setTreatment("Kontrolle");
         setPatientName("Max Mustermann");
@@ -41,7 +41,7 @@ public class Dentist {
     }
 
     public Dentist(LocalDate appointmentDate, String treatment, String patientName, Double price, Integer quantity, Boolean anestesie) {
-        setPatientId();
+        setAppointmentId();
         setAppointmentDate(appointmentDate);
         setTreatment(treatment);
         setPatientName(patientName);
@@ -50,8 +50,8 @@ public class Dentist {
         setAnestesie(anestesie);
     }
 
-    public Dentist(Long patientId,LocalDate appointmentDate, String treatment, String patientName, Double price, Integer quantity, Boolean anestesie) {
-        setPatientId(patientId);
+    public Dentist(Long appointmentId, LocalDate appointmentDate, String treatment, String patientName, Double price, Integer quantity, Boolean anestesie) {
+        setAppointmentId(appointmentId);
         setAppointmentDate(appointmentDate);
         setTreatment(treatment);
         setPatientName(patientName);
@@ -60,8 +60,8 @@ public class Dentist {
         setAnestesie(anestesie);
     }
 
-    public void setPatientId() {
-        this.patientId = sequence.getAndIncrement();
+    public void setAppointmentId() {
+        this.appointmentId = sequence.getAndIncrement();
     }
 
     public void setPrice(Double price) {
@@ -77,6 +77,6 @@ public class Dentist {
 
     @Override
     public Dentist clone() {
-        return new Dentist(patientId, appointmentDate, treatment, patientName, price, quantity, anestesie);
+        return new Dentist(appointmentId, appointmentDate, treatment, patientName, price, quantity, anestesie);
     }
 }
