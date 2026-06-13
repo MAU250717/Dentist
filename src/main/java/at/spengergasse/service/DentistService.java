@@ -92,4 +92,11 @@ public class DentistService {
             throw new DentistExeption("AppointmentId: " + patientId + " not found");
         }
     }
+
+    public void add1App(Dentist dentist) {
+        if (dentist == null) {
+            throw new DentistExeption("Dentist is null");
+        }
+        dentists.add(dentist);
+    }
 }

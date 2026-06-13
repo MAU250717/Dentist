@@ -25,6 +25,10 @@ public class Dentist {
     @Future(message = "Appointment date must be in the future")
     private LocalDate appointmentDate;
     @NotNull(message = "A Treatment specification is required")
+    @Pattern(
+            regexp = "Kontrolle|Zahnspange Kontrolle|Zahnreinigung|Wurzelbehandlung|Füllung|Zahnextraktion|Kronenbehandlung|Implantat|Bleaching|Zahnsteinentfernung|Brückenanpassung",
+            message = "This Treatement doesn't exist"
+    )
     private String    treatment;
     @NotNull(message = "A Name is required")
     private String    patientName;
@@ -37,9 +41,7 @@ public class Dentist {
     private Integer   quantity;
     private Boolean   anestesie;
 
-
     private static final AtomicLong sequence = new AtomicLong(1000);
-
     public Dentist() {
         setAppointmentId();
         setAppointmentDate(LocalDate.now());
@@ -48,6 +50,10 @@ public class Dentist {
         setPrice(150.0);
         setQuantity(1);
         setAnestesie(false);
+    }
+
+    public void setAppointmentId() {
+        appointmentId = sequence.getAndIncrement();
     }
 
     public Dentist(LocalDate appointmentDate, String treatment, String patientName, Double price, Integer quantity, Boolean anestesie) {
@@ -70,10 +76,6 @@ public class Dentist {
         setAnestesie(anestesie);
     }
 
-    public void setAppointmentId() {
-        this.appointmentId = sequence.getAndIncrement();
-    }
-
     public void setPrice(Double price) {
         if (price > 20 && price <= 2500) {
             this.price = price;
@@ -82,8 +84,6 @@ public class Dentist {
             throw new DentistExeption("Price must be between 20 and 2500");
         }
     }
-
-
 
     @Override
     public Dentist clone() {

@@ -3,18 +3,28 @@ import at.spengergasse.domain.Dentist;
 import at.spengergasse.domain.DentistExeption;
 import at.spengergasse.service.DentistService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 import com.vaadin.flow.component.checkbox.Checkbox;
+
+import java.time.LocalDate;
 
 @PageTitle("Appointment")
 @Route("Appointment")
@@ -24,6 +34,7 @@ public class AppointmentView extends VerticalLayout {
     private final Button buttonAdd10Appointments = new Button("Add 10 Appointments");
     private final Button buttonRemoveAllAnestesie =  new Button("Remove all Anestesie Patienten");
     private final Button buttonAddWrong = new Button("Add wrong");
+    private final Button buttonAddOne = new Button("Add Appointment");
     private final Grid<Dentist> grid = new Grid<>(Dentist.class, false);
     private final DentistService dentistService;
 
@@ -38,8 +49,9 @@ public class AppointmentView extends VerticalLayout {
         buttonAdd10Appointments.addClickListener(e -> add10Appointments());
         buttonRemoveAllAnestesie.addClickListener(e -> removeAllAnestesie());
         buttonAddWrong.addClickListener(e -> addWrong());
+        buttonAddOne.addClickListener(e -> addOneAppointment());
 
-        add(new HorizontalLayout(buttonRemoveAll,buttonAdd10Appointments,buttonRemoveAllAnestesie,buttonAddWrong));
+        add(new HorizontalLayout(buttonRemoveAll,buttonAdd10Appointments,buttonRemoveAllAnestesie,buttonAddWrong,buttonAddOne));
 
         grid.addColumn(dentist -> dentist.getAppointmentId())
                 .setHeader("Patient ID")
@@ -88,6 +100,82 @@ public class AppointmentView extends VerticalLayout {
 
         add(grid);
         reload();
+    }
+
+    private void addOneAppointment() {
+        Dialog dialog = new Dialog();
+
+        dialog.setHeaderTitle("Add 1 Appointment");
+        TextField appointmentId = new TextField("Appointment ID");
+        DatePicker appointmentDate = new DatePicker("Appointment Date");
+        ComboBox treatment = new ComboBox("Treatment Type");
+        treatment.setItems("Kontrolle","Zahnspange Kontrolle","Zahnreinigung","Wurzelbehandlung","Füllung","Zahnextraktion","Kronenbehandlung",
+                "Implantat","Bleaching","Zahnsteinentfernung","Brückenanpassung");
+        TextField patientName = new TextField("Patient Name");
+        NumberField price = new NumberField("Price");
+        IntegerField quantity = new IntegerField("Quantity");
+        Checkbox anestesie = new Checkbox("Anestesie");
+
+        BeanValidationBinder<Dentist> binder = new BeanValidationBinder<>(Dentist.class);
+
+        binder.forField(appointmentDate)
+                .bind("appointmentDate");
+
+        binder.forField(treatment)
+                .bind("treatment");
+
+        binder.forField(patientName)
+                .bind("patientName");
+
+        binder.forField(price)
+                .bind("price");
+
+        binder.forField(quantity)
+                .bind("quantity");
+
+        binder.forField(anestesie)
+                .bind("anestesie");
+
+        Dentist dentist = new Dentist();
+        binder.setBean(dentist);
+
+        appointmentId.setValue(""+dentist.getAppointmentId());
+        appointmentId.setReadOnly(true);
+
+        VerticalLayout formlayout = new VerticalLayout(
+                appointmentId,
+                appointmentDate,
+                treatment,
+                patientName,
+                price,
+                quantity,
+                anestesie
+        );
+
+        Button buttonOK = new Button("OK");
+        Button buttonCancel = new Button("Cancel");
+
+        buttonOK.addClickListener(e -> {
+            try {
+                if (binder.validate().isOk()) {
+                    dentistService.add1App(dentist);
+                    dialog.close();
+                    reload();
+                    Notification.show("Appointment has been added");
+                } else {
+                    Notification.show("Validation Failed! Check your input!");
+                }
+            }
+            catch (DentistExeption ex) {
+                Notification.show(ex.getMessage());
+            }
+        });
+        buttonCancel.addClickListener(e -> dialog.close());
+
+        dialog.add(formlayout);
+        dialog.getFooter().add(buttonOK, buttonCancel);
+
+        dialog.open();
     }
 
     private void removeOneApp(Long patientId) {
